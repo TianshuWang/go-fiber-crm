@@ -46,11 +46,11 @@ func (r *LeadRepositoryImpl) FindLeads() []model.Lead {
 }
 
 func (r *LeadRepositoryImpl) CreateLead(lead *model.Lead) {
-	r.DBConn.Create(&lead)
+	r.DBConn.Create(lead)
 }
 
 func (r *LeadRepositoryImpl) DeleteLead(lead *model.Lead) {
-	r.DBConn.Delete(&lead)
+	r.DBConn.Delete(lead)
 }
 
 func NewDBConn() *gorm.DB {
