@@ -2,18 +2,27 @@ package main
 
 import (
 	"github.com/gofiber/fiber"
+	"github.com/jinzhu/gorm"
 	"go-fiber-crm/repository"
 	"go-fiber-crm/service"
 )
 
 func main() {
-	s := service.NewLeadService(repository.NewLeadRepository(repository.NewDBConn()))
+	DBConn := repository.NewDBConn()
+	s := service.NewLeadService(repository.NewLeadRepository(DBConn))
 	app := fiber.New()
 	setupRoutes(app, s)
 	err := app.Listen(3000)
 	if err != nil {
 		return
 	}
+
+	defer func(DBConn *gorm.DB) {
+		err := DBConn.Close()
+		if err != nil {
+			return
+		}
+	}(DBConn)
 }
 
 func setupRoutes(app *fiber.App, s service.LeadService) {
