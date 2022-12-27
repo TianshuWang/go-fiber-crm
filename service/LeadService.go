@@ -18,9 +18,9 @@ type LeadServiceImpl struct {
 	repo repository.LeadRepository
 }
 
-func NewLeadService() LeadService {
+func NewLeadService(leadRepo repository.LeadRepository) LeadService {
 	return &LeadServiceImpl{
-		repo: repository.NewLeadRepository(),
+		repo: leadRepo,
 	}
 }
 
